@@ -3,6 +3,7 @@ import React from "react";
 import Meals from "./components/Meals/Meals";
 import Cart from "./components/Cart/Cart";
 import {useState} from "react";
+import CartProvider from "./store/CartProvider";
 
 function App() {
     const [cartIsShown, setCartIsShown] = useState(false)
@@ -16,13 +17,14 @@ function App() {
     }
 
     return (
-        <React.Fragment>
+        // Here we are providing the context for all our components, because all of them need some logic at the end
+        <CartProvider>
             { cartIsShown && <Cart onClose={hideCartHandler}/> }
             <Header onShowCart={showCartHandler} onHideCart={hideCartHandler}/>
             <main>
                 <Meals/>
             </main>
-        </React.Fragment>
+        </CartProvider>
     );
 }
 
