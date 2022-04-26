@@ -36,9 +36,9 @@ function AvailableMeals(props) {
         return <MealItem
             key={meal.id}
             id={meal.id}
-            mealName={meal.name}
-            mealPrice={meal.price}
-            MealDescription={meal.description}>
+            name={meal.name}
+            price={meal.price}
+            description={meal.description}>
         </MealItem>
     })
     return (
