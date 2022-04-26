@@ -14,6 +14,14 @@ const defaultCartState = {
 // state is a snapshot of the state managed by the reducer
 const cartReducer = (state, action) => {
     if (action.type === 'ADD'){
+        // Creating new state for cart items
+        const updatedItems = state.items.concat(action.item);
+        const updatedTotalAmount = state.totalAmount + action.item.price * action.item.amount
+        return {
+            items: updatedItems,
+            totalAmount: updatedTotalAmount
+        }
+    } else if (action.type === 'REMOVE') {
 
     }
     // Needs to return new state
