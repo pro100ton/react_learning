@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import MoviesList from './components/MoviesList';
 import './App.css';
@@ -8,7 +8,9 @@ function App() {
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
 
-    async function fetchMoviesHandler() {
+    // We are using useCallback here to ensure, that this function would not recreate at every re-render of
+    // an component, because it is always getting constant return values
+    const fetchMoviesHandler = useCallback(async () => {
         setIsLoading(true);
         setError(null)
         try {
@@ -30,7 +32,13 @@ function App() {
             setError(error.message)
         }
         setIsLoading(false)
-    }
+    }, [])
+
+    // We use function with useCallback to ensure that we will not get an infinite loop at every rerender,
+    // because snapshot of fetchMoviesHandler is saved via useCallback()
+    useEffect(() => {
+        fetchMoviesHandler();
+    }, [fetchMoviesHandler])
 
     let content = <p>Found no movies :(</p>
     if (movies.length > 0) {
