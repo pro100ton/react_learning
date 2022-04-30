@@ -21,14 +21,23 @@ const SimpleInput = (props) => {
         setEnteredName('')
     }
 
+    function nameInputBlur(event){
+        setEnteredNameTouched(true)
+        if (enteredName.trim() === '') {
+            setEnteredNameIsValid(false)
+            return;
+        }
+    }
+
     const nameInputIsInvalid = !enteredNameIsValid && enteredNameTouched;
-    const nameInputClasses = nameInputIsInvalid ? 'form-control invalid': 'form-control'
+    const nameInputClasses = nameInputIsInvalid ? 'form-control invalid' : 'form-control'
 
     return (
         <form onSubmit={formSubmissionHandler}>
             <div className={nameInputClasses}>
                 <label htmlFor='name'>Your Name</label>
-                <input ref={nameInputRef} type='text' id='name' onChange={nameInputChangeHandler} value={enteredName}/>
+                <input ref={nameInputRef} type='text' id='name' onChange={nameInputChangeHandler} value={enteredName}
+                       onBlur={nameInputBlur}/>
                 {nameInputIsInvalid && <p className='error-text'>Name should not be empty</p>}
             </div>
             <div className="form-actions">
